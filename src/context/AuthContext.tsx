@@ -25,22 +25,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Check initial auth state from localStorage
-    const savedToken = localStorage.getItem('dt_token');
-    const savedUser = localStorage.getItem('dt_user');
+    const savedToken = typeof window !== 'undefined' ? localStorage.getItem('dt_token') : null;
+    const savedUser = typeof window !== 'undefined' ? localStorage.getItem('dt_user') : null;
 
     if (savedToken && savedUser) {
       try {
         setToken(savedToken);
         setUser(JSON.parse(savedUser));
+        if (pathname.startsWith('/login')) {
+          router.replace('/');
+        }
       } catch (e) {
         localStorage.removeItem('dt_token');
         localStorage.removeItem('dt_user');
+        if (!pathname.startsWith('/login')) {
+          router.replace('/login');
+        }
+      }
+    } else {
+      if (!pathname.startsWith('/login')) {
+        router.replace('/login');
       }
     }
     setIsLoading(false);
-  }, []);
+  }, [pathname, router]);
 
-  // Protect routes client-side
+  // Route guard
   useEffect(() => {
     if (isLoading) return;
 
