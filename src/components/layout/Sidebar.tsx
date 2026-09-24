@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Link from 'next/navigation';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
@@ -62,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, setMobileOpen }) =
         {/* Top: Logo & Brand */}
         <div>
           <div className="h-16 flex items-center px-6 border-b border-slate-100">
-            <a href="/" className="flex items-center space-x-3">
+            <Link href="/" className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-xl bg-brand-bold text-white flex items-center justify-center font-bold shadow-md shadow-brand-bold/20">
                 <HeartPulse className="w-5 h-5 text-white" />
               </div>
@@ -74,7 +74,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, setMobileOpen }) =
                   Hospital Admin
                 </span>
               </div>
-            </a>
+            </Link>
           </div>
 
           {/* Navigation Links */}
@@ -85,7 +85,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, setMobileOpen }) =
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
@@ -104,7 +104,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen, setMobileOpen }) =
                   {item.active && (
                     <span className="ml-auto w-1.5 h-4 rounded-full bg-brand-bold" />
                   )}
-                </a>
+                </Link>
               );
             })}
           </nav>
