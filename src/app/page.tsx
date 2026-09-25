@@ -8,6 +8,7 @@ import { AdmissionTrendChart } from '../components/charts/AdmissionTrendChart';
 import { ConditionPieChart } from '../components/charts/ConditionPieChart';
 import { DoctorWorkloadChart } from '../components/charts/DoctorWorkloadChart';
 import { Button } from '../components/ui/Button';
+import { Spinner } from '../components/ui/Spinner';
 import { api } from '../lib/api';
 import {
   AnalyticsSummary,
@@ -112,8 +113,8 @@ export default function DashboardPage() {
               </span>
             </div>
             {loading ? (
-              <div className="h-72 flex items-center justify-center text-xs text-brand-muted animate-pulse">
-                Aggregating date statistics...
+              <div className="h-72 flex items-center justify-center">
+                <Spinner size="lg" text="Aggregating date statistics..." />
               </div>
             ) : (
               <AdmissionTrendChart data={trends} />
@@ -130,8 +131,8 @@ export default function DashboardPage() {
               <p className="text-xs text-brand-muted">Distribution by clinical classification</p>
             </div>
             {loading ? (
-              <div className="h-72 flex items-center justify-center text-xs text-brand-muted animate-pulse">
-                Loading condition analytics...
+              <div className="h-72 flex items-center justify-center">
+                <Spinner size="lg" text="Loading condition analytics..." />
               </div>
             ) : (
               <ConditionPieChart data={summary?.conditionDistribution || []} />
@@ -160,8 +161,8 @@ export default function DashboardPage() {
               </Link>
             </div>
             {loading ? (
-              <div className="h-72 flex items-center justify-center text-xs text-brand-muted animate-pulse">
-                Loading workload data...
+              <div className="h-72 flex items-center justify-center">
+                <Spinner size="lg" text="Loading workload telemetry..." />
               </div>
             ) : (
               <DoctorWorkloadChart data={workload} />
@@ -176,25 +177,31 @@ export default function DashboardPage() {
                 <span className="text-[11px] text-slate-400">By Patient Volume</span>
               </div>
               <div className="space-y-3">
-                {workload.slice(0, 5).map((doc, idx) => (
-                  <div
-                    key={doc._id}
-                    className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50/80 border border-slate-100"
-                  >
-                    <div className="flex items-center space-x-3 overflow-hidden">
-                      <div className="w-7 h-7 rounded-lg bg-blue-100 text-brand-bold font-bold text-xs flex items-center justify-center shrink-0">
-                        {idx + 1}
-                      </div>
-                      <div className="overflow-hidden">
-                        <p className="text-xs font-bold text-brand-jetBlack truncate">{doc.name}</p>
-                        <p className="text-[10px] text-slate-500 truncate">{doc.specialization}</p>
-                      </div>
-                    </div>
-                    <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-brand-bold border border-blue-200 shrink-0">
-                      {doc.patientCount} pts
-                    </span>
+                {loading ? (
+                  <div className="py-12 flex items-center justify-center">
+                    <Spinner size="md" text="Loading specialists..." />
                   </div>
-                ))}
+                ) : (
+                  workload.slice(0, 5).map((doc, idx) => (
+                    <div
+                      key={doc._id}
+                      className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50/80 border border-slate-100"
+                    >
+                      <div className="flex items-center space-x-3 overflow-hidden">
+                        <div className="w-7 h-7 rounded-lg bg-blue-100 text-brand-bold font-bold text-xs flex items-center justify-center shrink-0">
+                          {idx + 1}
+                        </div>
+                        <div className="overflow-hidden">
+                          <p className="text-xs font-bold text-brand-jetBlack truncate">{doc.name}</p>
+                          <p className="text-[10px] text-slate-500 truncate">{doc.specialization}</p>
+                        </div>
+                      </div>
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-50 text-brand-bold border border-blue-200 shrink-0">
+                        {doc.patientCount} pts
+                      </span>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
 

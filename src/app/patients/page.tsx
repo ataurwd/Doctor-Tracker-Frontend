@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { Button } from '../../components/ui/Button';
+import { Spinner } from '../../components/ui/Spinner';
 import { Badge } from '../../components/ui/Badge';
 import { Pagination } from '../../components/ui/Pagination';
 import { EditPatientModal } from '../../components/patients/EditPatientModal';
@@ -206,8 +207,11 @@ export default function PatientsPage() {
         {/* Patients Table */}
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card overflow-hidden">
           {loading ? (
-            <div className="py-24 text-center text-xs text-brand-muted animate-pulse">
-              Querying patients with indexed MongoDB aggregation...
+            <div className="py-24 flex items-center justify-center">
+              <Spinner
+                size="lg"
+                text="Querying patients with indexed MongoDB aggregation..."
+              />
             </div>
           ) : patients.length === 0 ? (
             <div className="py-20 text-center">

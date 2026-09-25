@@ -269,9 +269,9 @@ export default function LoginPage() {
               size="lg"
               isLoading={loading}
               className="w-full mt-2 font-bold shadow-md shadow-brand-bold/20"
-              rightIcon={<ArrowRight className="w-4 h-4" />}
+              rightIcon={!loading ? <ArrowRight className="w-4 h-4" /> : undefined}
             >
-              Sign In to Portal
+              {loading ? 'Authenticating & Loading...' : 'Sign In to Portal'}
             </Button>
           </form>
         </div>

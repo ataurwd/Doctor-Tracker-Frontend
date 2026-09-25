@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { Button } from '../../components/ui/Button';
+import { Spinner } from '../../components/ui/Spinner';
 import { Pagination } from '../../components/ui/Pagination';
 import { AddDoctorModal } from '../../components/doctors/AddDoctorModal';
 import { DoctorPatientsModal } from '../../components/doctors/DoctorPatientsModal';
@@ -203,8 +204,11 @@ export default function DoctorsPage() {
 
         {/* Doctors Grid */}
         {loading ? (
-          <div className="py-24 text-center text-xs text-brand-muted animate-pulse">
-            Querying doctors with optimized MongoDB pipeline...
+          <div className="py-24 flex items-center justify-center">
+            <Spinner
+              size="lg"
+              text="Querying doctors with optimized MongoDB pipeline..."
+            />
           </div>
         ) : doctors.length === 0 ? (
           <div className="bg-white rounded-2xl p-12 text-center border border-slate-200/80 shadow-card">

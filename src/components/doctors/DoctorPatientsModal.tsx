@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
+import { Spinner } from '../ui/Spinner';
 import { Badge } from '../ui/Badge';
 import { Doctor, Patient, PatientCondition, PatientGender } from '../../types';
 import { api } from '../../lib/api';
@@ -274,8 +275,8 @@ export const DoctorPatientsModal: React.FC<DoctorPatientsModalProps> = ({
         {/* Patients List Table */}
         <div className="border border-slate-200 rounded-xl overflow-hidden max-h-96 overflow-y-auto">
           {loading ? (
-            <div className="py-12 text-center text-xs text-brand-muted animate-pulse">
-              Loading patients...
+            <div className="py-12 flex items-center justify-center">
+              <Spinner size="md" text="Loading patient roster..." />
             </div>
           ) : patients.length === 0 ? (
             <div className="py-12 text-center text-xs text-slate-400">

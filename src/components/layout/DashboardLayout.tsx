@@ -5,6 +5,8 @@ import { Sidebar } from './Sidebar';
 import { Topbar } from './Topbar';
 import { useAuth } from '../../context/AuthContext';
 
+import { Spinner } from '../ui/Spinner';
+
 interface DashboardLayoutProps {
   children: React.ReactNode;
   title?: string;
@@ -22,14 +24,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   if (isLoading) {
     return (
       <div className="min-h-screen bg-brand-softWhite flex items-center justify-center">
-        <div className="flex flex-col items-center">
-          <div className="w-12 h-12 rounded-2xl bg-brand-bold text-white flex items-center justify-center font-bold animate-bounce shadow-lg shadow-brand-bold/30">
-            DT
-          </div>
-          <p className="mt-4 text-xs font-semibold text-brand-muted tracking-wide animate-pulse">
-            Loading Doctor Tracker...
-          </p>
-        </div>
+        <Spinner size="xl" text="Loading Doctor Tracker..." />
       </div>
     );
   }
